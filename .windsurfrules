@@ -1,0 +1,69 @@
+# .windsurfrules
+
+## Project Overview
+
+*   **Type:** windsurf_file
+*   **Description:** I am building a modern web application using Next.js that allows users to initiate calls with an AI agent powered by Retell AI. The application provides basic user authentication through Supabase, enabling users to log in, initiate audio calls, view live transcriptions in a chat format, and access detailed call reports and historical records.
+*   **Primary Goal:** Provide a seamless audio call experience with an AI agent, featuring real-time transcription displayed in a chat format, secure call logging to Supabase, and detailed call reports fetched via an external API.
+
+## User Roles
+
+*   **Role Definitions:**
+
+    *   **Basic Users**: Regular users who can make calls, view their own call history, access their personal transcripts and reports.
+    *   **Admin Users**: Administrators with elevated privileges who can view call records across all users, access all transcripts and reports, and filter data by specific users.
+
+## Project Structure
+
+### Framework-Specific Routing
+
+*   **Directory Rules:**
+
+    *   Next.js 14 (App Router): Uses the `app/[route]/page.tsx` convention for routing. This means all primary routes such as authentication, dashboard, call sessions, and call history will be organized within the `app/` directory following nested folder structures.
+    *   Example 1: "Next.js 14 (App Router)" → `app/auth/login/page.tsx` for login functionality.
+    *   Example 2: "Next.js 14 (App Router)" → `app/dashboard/page.tsx` for the main dashboard.
+    *   Example 3: "Next.js 14 (App Router)" → `app/call/page.tsx` for handling live call sessions and transcription.
+
+### Core Directories
+
+*   **Versioned Structure:**
+
+    *   `app/api`: Contains API routes (using Next.js 14 route handlers) for Supabase interactions, Retell AI calls, and fetching detailed call reports from the external API (Airops API).
+    *   `app/auth`: Holds authentication logic and pages including login implementations leveraging Supabase with role-based access control.
+    *   `app/dashboard`: Dedicated to the user dashboard where call initiation and navigation occur, with different views for basic and admin users.
+    *   `app/call`: Manages live call sessions.
+    *   `app/history`: Provides structured storage for past call logs and detailed reports with pagination, search, and filtering mechanisms. For admin users, includes additional capabilities to filter by user.
+
+### Key Files
+
+*   **Stack-Versioned Patterns:**
+
+    *   `app/auth/signup/page.tsx`: Implements Next.js 14 registration page using Supabase for secure user account creation.
+    *   `app/auth/login/page.tsx`: Implements Next.js 14 authentication pages using Supabase for secure login.
+    *   `app/dashboard/layout.tsx`: Defines the root layout for the dashboard with a focus on server-rendered content.
+    *   `app/call/page.tsx`: Handles live audio call sessions, integrating real-time transcription functionality with API interactions.
+    *   `app/history/page.tsx`: Displays call history with support for search, filter, and pagination functionalities.
+
+## Tech Stack Rules
+
+*   **Version Enforcement:**
+
+    *   next@14: App Router is required, and usage of legacy methods such as `getInitialProps` is prohibited.
+    *   supabase@latest: Enforce using the latest Supabase SDK for authentication and database interactions to support secure user and call data management.
+
+## PRD Compliance
+
+*   **Non-Negotiable:**
+
+    *   "We are building a modern web application using Next.js 14, TypeScript, and Tailwind CSS that lets users make audio calls with an AI agent powered by Retell AI." This enforces the use of the Next.js 14 App Router, server actions, and strict separation of concerns between authentication, live call handling, and detailed report generation via APIs.
+
+## App Flow Integration
+
+*   **Stack-Aligned Flow:**
+
+    *   Next.js 14 Auth Flow → 
+        - `app/auth/signup/page.tsx` utilizes server actions to handle new user registration via Supabase.
+        - `app/auth/login/page.tsx` utilizes server actions to securely handle user authentication via Supabase.
+    *   Dashboard Navigation Flow → `app/dashboard/page.tsx` provides users a central hub to initiate calls and navigate through application features.
+    *   Live Call Session Flow → `app/call/page.tsx` supports audio-based calls with real-time transcription displayed as a chat between the user and the AI agent.
+    *   Historical Call Data Flow → `app/history/page.tsx` supports search, filtering, and pagination for reviewing past call transcripts and detailed reports generated via the Airops API.
