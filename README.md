@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Voice Coach
+
+A modern web application built with Next.js 14 that allows users to initiate calls with an AI agent powered by Retell AI. This application provides basic user authentication through Supabase, enabling users to log in, initiate audio calls, view live transcriptions in a chat format, and access detailed call reports and historical records.
+
+## Features
+
+- **User Authentication**: Secure login and signup functionality with email verification
+- **Role-Based Access Control**: Two distinct user roles with different permissions
+  - **Basic Users**: Can make calls, view their own call history, access personal transcripts and reports
+  - **Admin Users**: Have elevated privileges to view all users' call records, access all transcripts and reports, and filter data by specific users
+- **AI Voice Calls**: Integration with Retell AI for natural voice conversations
+- **Real-time Transcription**: Live transcription displayed in chat format during calls
+- **Call History**: Access to past call logs with pagination, search, and filtering
+- **Detailed Reports**: Generation of comprehensive call reports
+
+## Tech Stack
+
+- Next.js 14 (App Router)
+- TypeScript
+- Tailwind CSS
+- Supabase (Authentication & Database)
+- Retell AI (Voice API)
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Copy `env.example.txt` to `.env.local` and fill in your Supabase credentials:
+
+```bash
+cp env.example.txt .env.local
+```
+
+4. Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `app/auth/`: Authentication pages (login and signup)
+- `app/dashboard/`: Main dashboard for initiating calls and navigation
+- `app/call/`: Live call session management with real-time transcription
+- `app/history/`: Call history with search and filtering
+- `app/api/`: API routes for Supabase interactions, Retell AI calls, and fetching reports
+- `components/`: Reusable components including authentication wrappers
+- `utils/`: Utility functions including Supabase client configuration
 
-## Learn More
+## Authentication and Security
 
-To learn more about Next.js, take a look at the following resources:
+This application implements Supabase authentication with email verification and role-based access control. The two user roles (basic and admin) have different permissions and access levels within the application.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The application can be deployed to platforms like Vercel:
 
-## Deploy on Vercel
+```bash
+npm run build
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+For more details on deployment options, refer to the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying).
