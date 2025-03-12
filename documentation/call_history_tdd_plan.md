@@ -20,11 +20,78 @@ This document outlines a Test-Driven Development (TDD) approach for implementing
 - Test that CallHistoryList renders correctly with no data (empty state)
 - Test that CallHistoryList renders with mock data correctly
 - Test that correct number of CallHistoryItem components are rendered
+- Test that loading state displays correctly while data is being fetched
+- Test that the component handles different user roles appropriately (admin vs. basic)
+- Test edge cases like null data or various call status types
 
 ### Implementation:
-- Create `components/CallHistoryList.tsx` component
-- Implement empty state UI with helpful message
-- Create a basic grid/table structure to display call records
+
+#### File Structure:
+```
+/src
+  /components
+    /history
+      CallHistoryList.tsx     # Main component for displaying call records
+      CallHistoryItem.tsx     # Component for individual call record
+      CallHistoryList.test.tsx # Tests for the component
+```
+
+#### Data Types:
+```typescript
+// Types for call history data
+export interface CallRecord {
+  id: string;
+  call_id: string;
+  user_id: string;
+  agent_id: string;
+  call_status: 'completed' | 'in-progress' | 'failed';
+  start_timestamp: number;
+  end_timestamp: number | null;
+  transcript: string | null;
+  created_at: string;
+}
+
+// Props for CallHistoryList component
+export interface CallHistoryListProps {
+  calls: CallRecord[] | null;
+  isLoading: boolean;
+  userRole: UserRole;
+  currentUserId: string;
+}
+```
+
+#### Detailed Implementation Phases:
+
+1. **Phase 1: Basic Structure**
+   - Create the basic component with TypeScript interfaces
+   - Implement empty state UI with helpful message and "Start a new call" button
+   - Add loading state with skeleton UI or spinner
+   - Write initial tests for empty and loading states
+
+2. **Phase 2: Styling and Layout**
+   - Implement responsive table/grid layout using Tailwind CSS
+   - Create container with white background, rounded corners, shadow
+   - Design table headers and column layout
+   - Add appropriate styling for different states
+   - Test UI rendering for different viewport sizes
+
+3. **Phase 3: CallHistoryItem Integration**
+   - Create basic CallHistoryItem component structure
+   - Connect it to the CallHistoryList
+   - Implement mapping of data to individual items
+   - Test rendering of multiple items with mock data
+
+4. **Phase 4: Data Integration**
+   - Connect to the data fetching logic in the parent component
+   - Implement sorting and initial filtering
+   - Test with real data structure
+   - Add error state handling
+
+5. **Phase 5: Role-Based Features**
+   - Add admin-specific views and data fields
+   - Implement conditional rendering based on user role
+   - Test with different user role scenarios
+   - Ensure proper access controls in the UI
 
 ## 3. Call History Item Component
 
