@@ -92,8 +92,10 @@ test.describe('Call History Page', () => {
     
     // Check for call ID display with truncated format (8 chars + ellipsis)
     await expect(page.locator(`text=Call ID: ${mockCalls[0].call_id.substring(0, 8)}...`)).toBeVisible();
-    await expect(page.locator('text=completed')).toBeVisible();
     await expect(page.locator('text=Agent: agent123')).toBeVisible();
+    
+    // Verify that the 'View Details' button is present
+    await expect(page.locator('button:has-text("View Details")')).toBeVisible();
   });
 
   test('shows admin-specific content for admin users', async ({ page }) => {

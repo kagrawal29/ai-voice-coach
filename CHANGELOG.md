@@ -16,6 +16,10 @@ All notable changes to the AI Voice Coach project will be documented in this fil
 - Call History layout with proper metadata
 - Authentication and role-based content in Call History page
 - TDD plan for incremental Call History page development
+- Call History List component with loading, empty, and populated states
+- Role-based content rendering in Call History List
+- E2E tests for Call History page using Playwright
+- Real authentication in E2E tests combined with mocked call data
 
 ### Changed
 - Updated application metadata to reflect AI Voice Coach branding

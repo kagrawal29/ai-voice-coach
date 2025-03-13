@@ -20,3 +20,10 @@ export interface CallHistoryListProps {
   currentUserId: string;
   onStartNewCall?: () => void;
 }
+
+export interface CallHistoryItemProps {
+  call: CallRecord;
+  userRole: UserRole;
+  currentUserId: string;
+  onViewDetails?: (callId: string) => void;
+}
