@@ -3,11 +3,15 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase, getCurrentUserWithRole, UserRole } from '@/utils/supabase';
+import { CallHistoryList } from '@/components/history/CallHistoryList';
+import { CallRecord } from '@/types/history';
 
 export default function HistoryPage() {
   const [user, setUser] = useState<any>(null);
   const [role, setRole] = useState<UserRole | null>(null);
   const [loading, setLoading] = useState(true);
+  const [calls, setCalls] = useState<CallRecord[] | null>(null);
+  const [fetchingCalls, setFetchingCalls] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -32,6 +36,35 @@ export default function HistoryPage() {
 
     checkAuth();
   }, [router]);
+
+  // Fetch call records when user and role are available
+  useEffect(() => {
+    if (!user || loading) return;
+    
+    const fetchCallHistory = async () => {
+      try {
+        setFetchingCalls(true);
+        
+        // Let Supabase RLS policies handle access control
+        // RLS will automatically restrict data based on the user's role
+        const { data, error } = await supabase
+          .from('call_history')
+          .select('*')
+          .order('created_at', { ascending: false });
+        
+        if (error) throw error;
+        
+        setCalls(data as CallRecord[]);
+      } catch (error) {
+        console.error('Error fetching call history:', error);
+        setCalls([]);
+      } finally {
+        setFetchingCalls(false);
+      }
+    };
+    
+    fetchCallHistory();
+  }, [user, loading]);
 
   if (loading) {
     return (
@@ -90,26 +123,14 @@ export default function HistoryPage() {
           <p className="text-gray-500">Filter and search options will appear here</p>
         </div>
 
-        {/* Placeholder for call history list */}
-        <div className="bg-white shadow overflow-hidden rounded-lg">
-          <div className="p-8 text-center">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12 mx-auto text-gray-400">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-            </svg>
-            <h3 className="mt-2 text-sm font-medium text-gray-900">No calls found</h3>
-            <p className="mt-1 text-sm text-gray-500">
-              Your call history will appear here.
-            </p>
-            <div className="mt-6">
-              <button
-                onClick={() => router.push('/call')}
-                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Start a new call
-              </button>
-            </div>
-          </div>
-        </div>
+        {/* Call history list component */}
+        <CallHistoryList
+          calls={calls}
+          isLoading={loading || fetchingCalls}
+          userRole={role || 'basic'}
+          currentUserId={user?.id || ''}
+          onStartNewCall={() => router.push('/call')}
+        />
         
         {/* Placeholder for pagination controls */}
         <div className="mt-6 flex justify-center">
