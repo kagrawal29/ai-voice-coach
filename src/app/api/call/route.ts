@@ -1,6 +1,5 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
+import { supabase } from '@/utils/supabase';
 
 // Transform Retell AI data to our schema
 function transformCallData(retellData: any, userId: string, userEmail?: string) {
@@ -21,8 +20,7 @@ export async function POST(request: Request) {
     // Get request body
     const retellData = await request.json();
     
-    // Initialize Supabase client
-    const supabase = createRouteHandlerClient({ cookies });
+    // Using the global Supabase client from utils
     
     // Get current user
     const { data: { user } } = await supabase.auth.getUser();
