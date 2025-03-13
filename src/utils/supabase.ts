@@ -1,14 +1,9 @@
-import { createClient } from '@supabase/supabase-js';
+'use client';
 
-// These values should be stored in environment variables
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('Supabase URL or Anon Key is missing');
-}
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Client-side Supabase client (uses auth-helpers-nextjs)
+export const supabase = createClientComponentClient();
 
 // Custom types for user roles
 export type UserRole = 'basic' | 'admin';

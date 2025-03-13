@@ -1,12 +1,11 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/utils/supabase';
+import { createServerSupabaseClient } from '@/utils/supabase-server';
 
 // Transform Retell AI data to our schema
-function transformCallData(retellData: any, userId: string, userEmail?: string) {
+function transformCallData(retellData: any, userId: string) {
   return {
     call_id: retellData.call_id,
     user_id: userId,
-    user_email: userEmail,
     agent_id: retellData.agent_id,
     call_status: retellData.call_status || '',
     start_timestamp: retellData.start_timestamp,
@@ -20,7 +19,8 @@ export async function POST(request: Request) {
     // Get request body
     const retellData = await request.json();
     
-    // Using the global Supabase client from utils
+    // Initialize Supabase client for server-side operations
+    const supabase = createServerSupabaseClient();
     
     // Get current user
     const { data: { user } } = await supabase.auth.getUser();
@@ -29,7 +29,7 @@ export async function POST(request: Request) {
     }
     
     // Transform data
-    const callData = transformCallData(retellData, user.id, user.email || undefined);
+    const callData = transformCallData(retellData, user.id);
     
     // Insert into database
     const { data, error } = await supabase

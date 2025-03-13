@@ -62,7 +62,7 @@ export function CallHistoryList({
         <ul className="divide-y divide-gray-200">
           {calls.map((call) => (
             <CallHistoryItem
-              key={call.id}
+              key={call.call_id}
               call={call}
               userRole={userRole}
               currentUserId={currentUserId}

@@ -40,7 +40,7 @@ export function CallHistoryItem({
     <li className="px-4 py-4 sm:px-6 hover:bg-gray-50 transition duration-150 ease-in-out">
       <div className="flex items-center justify-between">
         <p className="text-sm font-medium text-indigo-600 truncate">
-          Call ID: {call.call_id.substring(0, 8)}...
+          Call ID: {call.call_id}
         </p>
       </div>
       <div className="mt-2 sm:flex sm:justify-between">
