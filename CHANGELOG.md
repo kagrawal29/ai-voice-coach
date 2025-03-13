@@ -20,6 +20,10 @@ All notable changes to the AI Voice Coach project will be documented in this fil
 - Role-based content rendering in Call History List
 - E2E tests for Call History page using Playwright
 - Real authentication in E2E tests combined with mocked call data
+- API endpoint at `/api/call` for inserting call data into the database
+- Browser console test script for testing API functionality
+- Next.js middleware for proper authentication session handling
+- Separate client/server Supabase client utilities for App Router compatibility
 
 ### Changed
 - Updated application metadata to reflect AI Voice Coach branding
@@ -27,3 +31,6 @@ All notable changes to the AI Voice Coach project will be documented in this fil
 ### Fixed
 - Resolved nested directory structure for cleaner project organization
 - Fixed Supabase RLS policies to eliminate circular dependencies in role checking
+- Fixed authentication in API routes using the official Supabase auth-helpers-nextjs
+- Corrected call data structure to match the actual database schema
+- Fixed CallHistoryItem and CallHistoryList components to use call_id correctly
