@@ -6,7 +6,7 @@ export interface CallRecord {
   user_id: string;
   user_email?: string; // For admin view
   agent_id: string;
-  call_status: 'completed' | 'in-progress' | 'failed';
+  call_status: string;
   start_timestamp: number;
   end_timestamp: number | null;
   transcript: string | null;
